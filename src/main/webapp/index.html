@@ -19,16 +19,23 @@
                     <li class="active"><a href="#">Home</a></li>
                     <li id="clickme"><a href="#">Load persons</a></li>
                     <li><a href="#" id="addperson">Add person</a></li> 
-                    <li><a href="#">Page 3</a></li> 
                 </ul>
             </div>
         </nav>    
-        <form action="api/person"  method="POST" class="form-inline container" id="addeditform">
+        <form action="api/person"  method="POST" class="form-inline container" id="addform">
             
             <div class="form-group"><label for="fName">First Name</label><input id="fName" class="form-control"></div>
             <div class="form-group"><label for="lName">Last Name</label><input id="lName" class="form-control"></div>
             <div class="form-group"><label for="phone">Phone</label><input id="phone" class="form-control"></div>
             <button type="submit" id="btnadd">Add</button>
+        </form><br>
+        
+         <form action="api/person"  method="POST" class="form-inline container" id="editform">
+             <input type="hidden" id="id">
+            <div class="form-group"><label for="fNameEdit">First Name</label><input id="fNameEdit" class="form-control"></div>
+            <div class="form-group"><label for="lNameEdit">Last Name</label><input id="lNameEdit" class="form-control"></div>
+            <div class="form-group"><label for="phoneEdit">Phone</label><input id="phoneEdit" class="form-control"></div>
+            <button type="submit" id="btnedit">EDIT</button>
         </form><br>
                     
 

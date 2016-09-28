@@ -5,29 +5,63 @@
  */
 
 $(function () {
-    $("#addeditform").hide();
+    $("#addform").hide();
+    $("#editform").hide();
+
+    $("#personlist").on("click", "a.edit", function (data) {
+        event.preventDefault();
+
+        $("#addform").slideUp(250);
+        var id = $(this).data("personid");
+        $.get("api/person/" + id, function (data) {
+            window.console.log(data.firstName);
+            $("#id").val(data.id);
+            $("#fNameEdit").val(data.firstName);
+            $("#lNameEdit").val(data.lastName);
+            $("#phoneEdit").val(data.phone);
+        });
+
+        $("#editform").slideDown(250);
+    });
+    //Delete person
+    $("#personlist").on("click", "a.delete", function (data) {
+        event.preventDefault();
+        var formData;
+        var id = $(this).data("personid");
+        window.console.log(id);
+        $.get("api/person/" + id, function (data) {
+            formData = {
+                'firstName': data.firstName,
+                'lastName': data.lastName,
+                'phone': data.phone
+            };
+        }).done(function(){
+            window.console.log("After done: " + formData);
+            deletePerson(formData);
+        });
+    });
+
 
     //Rendering form
     $("#clickme").on("click", function () {
         renderList();
-        $("#addeditform").slideUp(250);
+        $("#addform").slideUp(250);
+        $("#editform").slideUp(250);
+
 
     });
 
-    //Adding a person
+    //Show add person
     $("#addperson").on("click", function () {
-        $("#addeditform").slideToggle(250);
-        $("#btnedit").hide();
+        $("#addform").slideToggle(250);
+        $("#editform").slideUp(250);
+
     });
 
-    $("btnedit").click(function () {
-        $("#persontable").hide();
-        var id = $(this).data("personid");
-        $('#personlist').text(id);
-    });
 
-    //Adding a
-    $("#addeditform").submit(function (event) {
+
+    //Adding a new person
+    $("#addform").submit(function (event) {
         event.preventDefault();
         var formData = {
             'firstName': $("#fName").val(),
@@ -45,14 +79,42 @@ $(function () {
             }
         })
                 .done(function (data) {
-                     resetForm($("#addeditform"));
+                    resetForm($("#addform"));
                     renderList();
                 });
 
     });
+    
+    //Edit person
+    $("#editform").submit(function (event) {
+        event.preventDefault();
+
+        var formData = {
+            'id': $("#id").val(),
+            'firstName': $("#fNameEdit").val(),
+            'lastName': $("#lNameEdit").val(),
+            'phone': $("#phoneEdit").val()
+        };
+        window.console.log(formData);
+        $.ajax({
+            type: 'PUT',
+            url: 'api/person',
+            data: JSON.stringify(formData),
+            dataType: 'json',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+                .done(function () {
+                    resetForm($("#editform"));
+                    $("#editform").slideUp(250);
+                    renderList();
+                });
+    });
 
 
-
+    //For rendering the personlist
     function renderList() {
         $.ajax({
             type: 'GET',
@@ -65,19 +127,38 @@ $(function () {
                     $('#personlist').append("<tr><td>" + person.id + "</td><td>" + person.firstName
                             + "</td><td> " + person.lastName + "</td><td>"
                             + person.phone + "</td><td>"
-                            + "<a href='#' class='btnedit' data-personid='" + person.id + "'>edit </a>/<a href='#'> delete</a></td></tr>");
+                            + "<a href='#' class='edit' data-personid='" + person.id
+                            + "'>edit </a>/<a href='#' class='delete' data-personid='" + person.id + "'> delete</a></td></tr>");
                 });
             }
         });
 
 
     }
-    
+
+    //For clearing a form
     function resetForm($form) {
-    $form.find('input:text, input:password, input:file, select, textarea').val('');
-    $form.find('input:radio, input:checkbox')
-         .removeAttr('checked').removeAttr('selected');
-}
+        $form.find('input:text, input:password, input:file, select, textarea').val('');
+        $form.find('input:radio, input:checkbox')
+                .removeAttr('checked').removeAttr('selected');
+    }
+
+    function deletePerson(formData) {
+        window.console.log("Data: " + formData);
+        $.ajax({
+            type: 'DELETE',
+            url: "api/person",
+            dataType: "json",
+            data: formData,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+
+        });
+        
+    };
+
 });
 
 

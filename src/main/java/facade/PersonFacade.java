@@ -56,7 +56,9 @@ public class PersonFacade implements IPersonFacade {
         EntityManager em = getEntityManager();
         Person person = em.find(Person.class, id);
         try {
+            em.getTransaction().begin();
             em.remove(em);
+            em.getTransaction().commit();
         } finally {
             em.close();
         }
@@ -86,7 +88,9 @@ public class PersonFacade implements IPersonFacade {
     public Person editPerson(Person p) {
         EntityManager em = getEntityManager();
         try {
+            em.getTransaction().begin();
             em.merge(p);
+            em.getTransaction().commit();
         } finally {
             em.close();
         }

@@ -15,6 +15,7 @@ import javax.persistence.Persistence;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -43,7 +44,18 @@ public class PersonService {
      */
     public PersonService() {
     }
-    
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String editPerson(String p) {
+        System.out.println("PUT");
+
+        Person person = gson.fromJson(p, Person.class);
+        pf.editPerson(person);
+        return gson.toJson(person);
+
+    }
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public String addPerson(String p) {
@@ -53,23 +65,23 @@ public class PersonService {
         return gson.toJson(person);
 
     }
-    
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public String editPerson(String p) {
-        Person person = gson.fromJson(p, Person.class);
-        pf.editPerson(person);
-        return gson.toJson(person);
 
-    }
-    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getPersons() {
-        System.out.println("Her er jeg");
+        System.out.println("GET all");
         List<Person> persons = pf.getPersons();
         return gson.toJson(persons);
 
+    }
+
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String deletePerson(String p){
+        System.out.println("DELETE!");
+        Person person = gson.fromJson(p, Person.class);
+        pf.deletePerson(person.getId());
+        return gson.toJson(person);
     }
 
     @Path("{id}")
@@ -81,18 +93,4 @@ public class PersonService {
 
     }
 
-   
-    
-    
-    
-
-    /**
-     * PUT method for updating or creating an instance of PersonService
-     *
-     * @param content representation for the resource
-     */
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
-    }
 }
