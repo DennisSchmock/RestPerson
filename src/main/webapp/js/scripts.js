@@ -7,26 +7,26 @@
 $(function () {
     $("#addeditform").hide();
 
-
+    //Rendering form
     $("#clickme").on("click", function () {
         renderList();
         $("#addeditform").slideUp(250);
 
-
     });
 
+    //Adding a person
     $("#addperson").on("click", function () {
         $("#addeditform").slideToggle(250);
         $("#btnedit").hide();
-
     });
 
-    $("a.btnedit").click(function () {
+    $("btnedit").click(function () {
         $("#persontable").hide();
         var id = $(this).data("personid");
         $('#personlist').text(id);
     });
 
+    //Adding a
     $("#addeditform").submit(function (event) {
         event.preventDefault();
         var formData = {
@@ -43,15 +43,11 @@ $(function () {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
-
         })
                 .done(function (data) {
-                    // $("#addeditform").slideUp(250);
-
-
+                     resetForm($("#addeditform"));
+                    renderList();
                 });
-
-        renderList();
 
     });
 
@@ -76,6 +72,12 @@ $(function () {
 
 
     }
+    
+    function resetForm($form) {
+    $form.find('input:text, input:password, input:file, select, textarea').val('');
+    $form.find('input:radio, input:checkbox')
+         .removeAttr('checked').removeAttr('selected');
+}
 });
 
 
