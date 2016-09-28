@@ -43,7 +43,17 @@ public class PersonService {
      */
     public PersonService() {
     }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String addPerson(String p) {
+        System.out.println("POST");
+        Person person = gson.fromJson(p, Person.class);
+        pf.addPerson(person);
+        return gson.toJson(person);
 
+    }
+    
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public String editPerson(String p) {
@@ -56,6 +66,7 @@ public class PersonService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getPersons() {
+        System.out.println("Her er jeg");
         List<Person> persons = pf.getPersons();
         return gson.toJson(persons);
 
@@ -70,14 +81,7 @@ public class PersonService {
 
     }
 
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public String addPerson(String p) {
-        Person person = gson.fromJson(p, Person.class);
-        pf.addPerson(person);
-        return gson.toJson(person);
-
-    }
+   
     
     
     
