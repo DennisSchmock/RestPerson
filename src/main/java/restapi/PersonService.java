@@ -58,6 +58,7 @@ public class PersonService {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public String addPerson(String p) {
         System.out.println("POST");
         Person person = gson.fromJson(p, Person.class);
@@ -75,12 +76,13 @@ public class PersonService {
 
     }
 
+    @Path("{id}")
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
-    public String deletePerson(String p){
-        System.out.println("DELETE!");
-        Person person = gson.fromJson(p, Person.class);
-        pf.deletePerson(person.getId());
+    public String deletePerson(@PathParam("id") int id,String p) {
+        System.out.println("DELETE: " + id);
+        Person person = pf.deletePerson(id);
+        System.out.println(person);
         return gson.toJson(person);
     }
 

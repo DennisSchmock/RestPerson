@@ -14,7 +14,6 @@ $(function () {
         $("#addform").slideUp(250);
         var id = $(this).data("personid");
         $.get("api/person/" + id, function (data) {
-            window.console.log(data.firstName);
             $("#id").val(data.id);
             $("#fNameEdit").val(data.firstName);
             $("#lNameEdit").val(data.lastName);
@@ -26,19 +25,16 @@ $(function () {
     //Delete person
     $("#personlist").on("click", "a.delete", function (data) {
         event.preventDefault();
-        var formData;
+
         var id = $(this).data("personid");
-        window.console.log(id);
-        $.get("api/person/" + id, function (data) {
-            formData = {
-                'firstName': data.firstName,
-                'lastName': data.lastName,
-                'phone': data.phone
-            };
-        }).done(function(){
-            window.console.log("After done: " + formData);
-            deletePerson(formData);
+        $.ajax({
+            type: 'DELETE',
+            url: 'api/person/' + id,
+            dataType: 'json'
+        }).done(function () {
+            renderList();
         });
+
     });
 
 
@@ -84,7 +80,7 @@ $(function () {
                 });
 
     });
-    
+
     //Edit person
     $("#editform").submit(function (event) {
         event.preventDefault();
@@ -95,7 +91,6 @@ $(function () {
             'lastName': $("#lNameEdit").val(),
             'phone': $("#phoneEdit").val()
         };
-        window.console.log(formData);
         $.ajax({
             type: 'PUT',
             url: 'api/person',
@@ -143,21 +138,6 @@ $(function () {
                 .removeAttr('checked').removeAttr('selected');
     }
 
-    function deletePerson(formData) {
-        window.console.log("Data: " + formData);
-        $.ajax({
-            type: 'DELETE',
-            url: "api/person",
-            dataType: "json",
-            data: formData,
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-
-        });
-        
-    };
 
 });
 

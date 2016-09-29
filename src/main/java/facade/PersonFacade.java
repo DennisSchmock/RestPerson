@@ -57,7 +57,7 @@ public class PersonFacade implements IPersonFacade {
         Person person = em.find(Person.class, id);
         try {
             em.getTransaction().begin();
-            em.remove(em);
+            em.remove(person);
             em.getTransaction().commit();
         } finally {
             em.close();
