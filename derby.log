@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Wed Sep 28 15:00:34 CEST 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0157-70e1-e4ac-00000e57c7e0 
+Thu Sep 29 09:07:39 CEST 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0157-74c5-2386-00000e590e20 
 on database directory /Users/dennisschmock/netbeans/PersonRestEx1/memory/testDB with class loader sun.misc.Launcher$AppClassLoader@232204a1 
 Loaded from file:/Users/dennisschmock/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
 java.vendor=Oracle Corporation
