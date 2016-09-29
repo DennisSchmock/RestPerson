@@ -25,7 +25,6 @@
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.password" value="Ospekos_22"/> 
             <property name="javax.persistence.schema-generation.database.action" value="create"/> 
-            <property name="javax.persistence.sql-load-script-source" value="script/data.sql"/>
         </properties> 
     </persistence-unit>
     <persistence-unit name="pu_test" transaction-type="RESOURCE_LOCAL">

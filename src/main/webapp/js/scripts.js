@@ -22,6 +22,7 @@ $(function () {
 
         $("#editform").slideDown(250);
     });
+    
     //Delete person
     $("#personlist").on("click", "a.delete", function (data) {
         event.preventDefault();
