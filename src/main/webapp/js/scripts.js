@@ -25,7 +25,6 @@ $(function () {
     //Delete person
     $("#personlist").on("click", "a.delete", function (data) {
         event.preventDefault();
-
         var id = $(this).data("personid");
         $.ajax({
             type: 'DELETE',
@@ -40,6 +39,7 @@ $(function () {
 
     //Rendering form
     $("#clickme").on("click", function () {
+        event.preventDefault();
         renderList();
         $("#addform").slideUp(250);
         $("#editform").slideUp(250);
@@ -49,6 +49,7 @@ $(function () {
 
     //Show add person
     $("#addperson").on("click", function () {
+        event.preventDefault();
         $("#addform").slideToggle(250);
         $("#editform").slideUp(250);
 
